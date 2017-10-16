@@ -69,10 +69,12 @@ pre, code {
     text-align: justify !important;
   }
   
+  /*after*/ 
   table, pre, dl, blockquote, q, ul, ol {
     margin: 1.2em 0em;
   }
   
+ /*after*/ 
   ul, ol {
     padding-left: 0em;
     margin: 1.2em 2em;
@@ -96,6 +98,7 @@ pre, code {
     margin: 0.2em 0 !important;
   }
   
+   /*after*/ 
   /* Smaller spacing for sub-lists */
   ul ul, ul ol, ol ul, ol ol {
     margin: 0;
@@ -112,21 +115,22 @@ pre, code {
     list-style-type: square;
   }
   
+  /*after*/ 
   dl {
     padding: 0;
   }
   
+  /*after*/ 
   dl dt {
     font-size: 1em;
     font-weight: bold;
     font-style: italic;
   }
-  
+  /*after*/ 
   dl dd {
     margin: 0 0 1em;
     padding: 0 1em;
   }
-  
   
   blockquote, q {
     border-left: 4px solid #0C7ED2;
@@ -141,6 +145,7 @@ pre, code {
     content: none;
   }
   
+
   h1, h2, h3, h4, h5, h6 {
     margin: 1.3em 0 1em;
     padding: 0.2em;
@@ -180,6 +185,26 @@ pre, code {
     font-size: 1em;
     color: #777;
   }
+
+  strong{
+    color: #FF6103;
+  }
+  
+  em{
+      color: #00C957;
+  }
+  
+  strong em {
+      color: #228B22;
+  }
+  
+/******************************************/
+/*after*/ 
+
+
+
+  
+
   
   table {
     padding: 0;
@@ -225,15 +250,5 @@ pre, code {
     margin : 1em;
   }
   
-  strong{
-    color: #FF6103;
-  }
-  
-  em{
-      color: #00C957;
-  }
-  
-  strong em {
-      color: #228B22;
-  }
+
     
