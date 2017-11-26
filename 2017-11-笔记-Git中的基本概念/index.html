@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>笔记-git中的基本概念 | 晒太阳的猫</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">笔记-git中的基本概念</h1><a id="logo" href="/.">晒太阳的猫</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/rss/"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">笔记-git中的基本概念</h1><div class="post-meta">Nov 26, 2017<span> | </span><span class="category"><a href="/categories/小零识/">小零识</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2017-11-笔记-Git中的基本概念/" href="/2017-11-笔记-Git中的基本概念/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>这篇笔记旨在理解几个核心的git基本概念，如果对git了解较少，可以先看git基本教程。<br>这里推荐一个：<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">廖雪峰-Git教程</a> </p>
+<a id="more"></a>
+<h2 id="commit-提交-与-branch-分支"><a href="#commit-提交-与-branch-分支" class="headerlink" title="commit(提交) 与 branch(分支)"></a>commit(提交) 与 branch(分支)</h2><h3 id="版本号"><a href="#版本号" class="headerlink" title="版本号"></a>版本号</h3><p>commit是git管理的基本单位，在有多个分支的情况下，这些commit就构成了一颗commit树。<br>每个提交会有一个版本号（<code>commit id</code>），类似<code>3628164fb26d48395383f8f31179f24e0882e1e0</code>,即这个提交的命名，是用十六进制表示的一个SHA1计算出来的一个非常大的数字。</p>
+<blockquote>
+<p>实际使用中，不必要写全这串字符，使用前面一部分，如前8位，git能唯一识别出来某个提交就可以了。<br>文中的<code>提交</code>二字，就是指一次<code>commit</code>，也就是一个版本，可以用<code>版本</code>二字代替，习惯使用提交这个说法了。  </p>
+</blockquote>
+<h3 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h3><p>从形式上看，分支(branch)就是从树的叶子节点到跟节点的一条线（可能有分叉），那git中是如何表示这条线的呢？或者换个问法，git中的分支名，究竟是表示什么呢。   </p>
+<p>其实分支名，如<code>dev</code>表示的只是dev这个分支上最新的那次提交，或者说，<code>dev</code>这三个字母，这个字符串，就是dev分支上最新的那个提交的<strong>别名</strong>，或者理解为那个最新提交的一个指针。   </p>
+<blockquote>
+<p>git中“并没有”分支，只有<code>commit</code>   </p>
+</blockquote>
+<p>如下图所示，<code>dev</code>只是 commit-6 的一个别名，如果在 commit-6 的基础上，做了一次新的提交，则dev指向这次新的提交。每个提交（除了第一次提交）都会有一个或者两个父节点提交，如图中的 commit-4 ，就是一次合并提交，拥有两个父节点。  </p>
+<p><img src="http://ww1.sinaimg.cn/large/599d0f25gy1flvje7vnrsj20jr07yjrn.jpg" alt=""></p>
+<h3 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h3><p>git中用 <code>HEAD</code> 表示当前分支的最新的那个提交，即如果在dev分支，则 <code>HEAD</code> 表示(指向)的就是dev,也就是指向commit-6。<code>HEAD^</code> 表示 <code>HEAD</code> 的前一个提交，即 commit-5； <code>HEAD^^</code> 表示 <code>HEAD</code> 的前两个提交，前100个可以写成 <code>HEAD~100</code> ，相应的，前一个也可以写成 <code>HEAD~1</code> 。  </p>
+<h2 id="本地仓库-和-远程仓库"><a href="#本地仓库-和-远程仓库" class="headerlink" title="本地仓库 和 远程仓库"></a>本地仓库 和 远程仓库</h2><p>常见的GIT <code>工作区</code> 、 <code>暂存区</code> 、 <code>本地仓库</code> 和 <code>远程仓库</code> 的示意图。<br><img src="http://ww1.sinaimg.cn/large/599d0f25gy1flvhfdu3vdj214a0qxjvu.jpg" alt=""> </p>
+<p>看这幅图会理解git只有两个仓库，<code>本地仓库</code> 和 <code>远程仓库</code>；但如果理解为三个仓库，才能更好地理解有些git命令或操作是什么回事。哪三个仓库？<br><code>本地工作仓库</code> 、 <code>本地远程仓库</code> 、 <code>远程仓库</code><br>名字是随便取的，重点在于便于理解。看下面这幅图。<br><img src="http://ww1.sinaimg.cn/large/599d0f25gy1flvjypzj6sj20zz0m33zb.jpg" alt="">  </p>
+<p>这其中多了一个<code>Local Remote repository</code>, 即上面提到的<code>本地远程仓库</code>，这个仓库就是远程仓库在本地的一个拷贝，目的是为了和远程仓库保持一致。<br>常听到关于<code>pull</code>命令的解释就是，pull 是 fetch 和 merge 的结合，完成的实际上是先fetch，再merge。 如果没有<code>本地远程仓库</code>这个概念，其实不是特别好理解这句话。  </p>
+<p><code>git fetch</code>做的其实是把<code>远程仓库</code>的更新全部拉取到<code>本地远程仓库</code>（注意，是全部，不只是当前分支）。而这里的merge，完整的写出来应该是这样（假设在dev分支）：  </p>
+<pre><code class="c"><span class="comment">/* pull */</span>
+git pull origin dev 
+
+<span class="comment">/* fetch + merge */</span>
+git fetch 
+git merge origin/dev
+</code></pre>
+<p>这里的<code>origin/dev</code>指的就是<code>本地远程仓库</code>中的dev分支，它刚刚通过fetch命令，从真正的远端仓库拉取到了最新的数据，然而，你自己的dev分支并没有更新，需要将<code>本地远程仓库</code>中的dev分支(名字是<code>origin/dev</code>)merge到本地的dev分支。 pull就是完成的上面两步。 所以pull之后，本地的dev就直接更新了，所以才感受不到origin/dev的存在。   </p>
+<p>理解了 <code>本地远程仓库</code> ，可以方便地完成一些操作。如，现在正在 dev 分支，需要合并远端最新的 master 分支的代码，如何做？<br>之前的作法可能是这样：  </p>
+<pre><code class="c">git checkout master     <span class="comment">// 切换到 master 分支</span>
+git pull origin master  <span class="comment">// 拉取远端代码到 master 分支</span>
+git checkout dev        <span class="comment">// 切换回 dev 分支</span>
+git merge master        <span class="comment">// 合并 master  分支</span>
+</code></pre>
+<p>而实际上，不需要切换分支，这样就可以：  </p>
+<pre><code class="c">git fetch               <span class="comment">// 更新本地远端仓库</span>
+git merge origin/master <span class="comment">// 从 本地远端仓库 合并 master 分支</span>
+</code></pre>
+<p>需要注意的是，这里必须先使用 <code>git fetch</code> 命令，直接使用 <code>origin/master</code> 并不会让本地远端仓库自动去远端拉取最新的代码。  </p>
+<hr>
+<p>END  </p>
+</div><div class="tags"><a href="/tags/工具/">工具</a><a href="/tags/git/">git</a></div><div class="post-nav"><a href="/2017-11-win-10-virtual-desktop-enhancer/" class="next">为Win10虚拟桌面设置不同背景</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'jgrass';
+var disqus_identifier = '2017-11-笔记-Git中的基本概念/';
+var disqus_title = '笔记-git中的基本概念';
+var disqus_url = 'http://www.jgrass.cc/2017-11-笔记-Git中的基本概念/';
+$('.btn_click_load').click(function() {
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  $('.btn_click_load').css('display','none');
+});
+$.ajax({
+  url: 'https://disqus.com/next/config.json',
+  timeout: 3000,
+  type: 'GET',
+  success: (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    $('.btn_click_load').css('display','none');
+  })(),
+  error: function() {
+    $('.btn_click_load').css('display','block');
+  }
+});</script><script id="dsq-count-scr" src="//jgrass.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/小零识/">小零识</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂文/">杂文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程/">编程</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/工具/" style="font-size: 15px;">工具</a> <a href="/tags/C/" style="font-size: 15px;">C#</a> <a href="/tags/Visual-Studio/" style="font-size: 15px;">Visual Studio</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/WPF/" style="font-size: 15px;">WPF</a> <a href="/tags/git/" style="font-size: 15px;">git</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017-11-笔记-Git中的基本概念/">笔记-git中的基本概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2017-11-win-10-virtual-desktop-enhancer/">为Win10虚拟桌面设置不同背景</a></li><li class="post-list-item"><a class="post-list-link" href="/2017-10-C-调用命令行工具/">C# 调用命令行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017-10-VS-插件开发笔记/">VS插件开发笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017-10-csharp-dynamic/">C# 动态类型与动态编译简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2017-10-auto-dll-reference-change-tool/">Visual Studio DLL 自动替换工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017-10-VS多解决方案联调/">工具-VisualStudio多解决方案联合调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2017-10-listbox-scrollviewer/">ListBox虚拟化时需要注意的一些小问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017-10-快速截图工具/">屏幕快速截图工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2017-10-写邮件/">怎样写好一封邮件</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//jgrass.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://lindexi.gitee.io/" title="lindexi" target="_blank">lindexi</a><ul></ul><a href="https://walterlv.gitee.io/" title="walterlv" target="_blank">walterlv</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">晒太阳的猫.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
