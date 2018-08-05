@@ -1,24 +1,17 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>TortoiseGit配置ssh服务 | 晒太阳的猫</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">TortoiseGit配置ssh服务</h1><a id="logo" href="/.">晒太阳的猫</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/rss/"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">TortoiseGit配置ssh服务</h1><div class="post-meta">Feb 4, 2018<span> | </span><span class="category"><a href="/categories/编程/">编程</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2018-02-TortoiseGit配置ssh服务/" href="/2018-02-TortoiseGit配置ssh服务/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>听说你的 Git 从 <code>HTTPS</code> 换成 <code>SSH</code> 之后，小乌龟（ToroiseGit）不能用啦？  </p>
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>在 Windows 系统上安装 FTP 服务 | 晒太阳的猫</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">在 Windows 系统上安装 FTP 服务</h1><a id="logo" href="/.">晒太阳的猫</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/rss/"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">在 Windows 系统上安装 FTP 服务</h1><div class="post-meta">Aug 5, 2018<span> | </span><span class="category"><a href="/categories/小零识/">小零识</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2018-08-ftp-server-on-windows/" href="/2018-08-ftp-server-on-windows/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>为什么总是连接不成功？</p>
 <a id="more"></a>
-<p>如果你的Git仓库之前<code>HTTPS</code>协议用的好好的，换成<code>SSH</code>之后，小乌龟不能用了，提示认证失败，原因很可能是 ToroiseGit 对 SSH 协议支持的问题。  </p>
-<p>原因如下：  </p>
-<p><a href="https://github.com/ysc/APDPlat/wiki/TortoiseGit%E5%AF%86%E9%92%A5%E7%9A%84%E9%85%8D%E7%BD%AE" target="_blank" rel="noopener">TortoiseGit密钥的配置</a>  </p>
-<p>全文引用如下：</p>
-<p>TortoiseGit使用扩展名为ppk的密钥，而不是ssh-keygen生成的rsa密钥。也就是说使用ssh-keygen -t rsa -C “yourname@yourcompany.com”产生的密钥在TortoiseGit中不能用。而基于github的开发必须要用到rsa密钥，因此需要用到TortoiseGit的putty key generator工具来生成既适用于github的rsa密钥也适用于TortoiseGit的ppk密钥，配置步骤如下：  </p>
-<blockquote>
-<p>1、运行TortoiseGit开始菜单中的Puttygen程序</p>
-<p>2、点击“Generate”按钮，鼠标在上图的空白地方来回移动直到进度条完毕，就会自动生一个随机的key</p>
-<p>3、为密钥设置对应的访问密码，在“Key passphrase”和“Confirm passphrase”的后面的输入框中输入密码</p>
-<p>4、将多行文本框中以“ssh-rsa”开头的内容全选、复制，并粘贴到github的 Account Settings -&gt; SSH Keys -&gt; Add SSH key -&gt; Key字段中，这就是适用于github的公钥</p>
-<p>5、点击“Save private key”按钮,将生成的key保存为适用于TortoiseGit的私钥（扩展名为.ppk）</p>
-<p>6、运行TortoiseGit开始菜单中的Pageant程序，程序启动后将自动停靠在任务栏中，双击该图标，弹出key管理列表</p>
-<p>7、点击“Add Key”按钮，将第5步保存的ppk私钥添加进来，关闭对话框即可  </p>
-</blockquote>
-<h3 id="更简单的解决方式"><a href="#更简单的解决方式" class="headerlink" title="更简单的解决方式"></a>更简单的解决方式</h3><p>更换 ToroiseGit 的 SSH 服务程序  </p>
-<p><img src="http://ww1.sinaimg.cn/large/599d0f25gy1fo4m0mlwrjj20ji0hodk4.jpg" alt=""> </p>
-<p>将 SSH 服务程序更换为 Git 原生自带的 <code>ssh.exe</code><br>可以之后输入 <code>ssh.exe</code> , 或者该文件的全路径（在Git的安装目录下）。  </p>
-<hr>
-</div><div class="tags"><a href="/tags/git/">git</a></div><div class="post-nav"><a href="/2018-03-C-进程间数据共享/" class="pre">C#进程间数据共享的简单实现</a><a href="/2018-01-笔记-WPF程序集资源文件的引用/" class="next">笔记-WPF程序集资源文件的引用</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@v1.1.7/dist/Valine.min.js?v=0.0.0"></script><script>var valine = new Valine({
+<h3 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h3><p>推荐 <a href="https://filezilla-project.org/" target="_blank" rel="noopener">FileZilla - The free FTP solution</a><br>免费，好用。  </p>
+<h3 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h3><p>安装，按照普通软件安装就好啦，安装时使用默认配置。</p>
+<p>配置用户和用户组</p>
+<p><img src="http://ww1.sinaimg.cn/large/599d0f25gy1ftyltukx1pj20iy0aet92.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/599d0f25gy1ftylu83svij20ir0aot93.jpg" alt=""> </p>
+<p>基础配置其实挺简单的，添加用户，设置密码，并设置其可以访问的目录以及权限即可。</p>
+<h3 id="开启-TLS"><a href="#开启-TLS" class="headerlink" title="开启 TLS"></a>开启 TLS</h3><p><a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="noopener">SSL/TLS协议运行机制的概述 - 阮一峰的网络日志</a>  </p>
+<p><img src="http://ww1.sinaimg.cn/large/599d0f25gy1ftylya3c3kj20jd0dddgy.jpg" alt="">  </p>
+<p>创建一个 private key file , 开启 TLS ，这样就不会有警告说连接不安全啦，另外，发现不开启这个，连接还容易断。</p>
+<p>如何创建 private key file? 点击设置界面后面的那个 Broswe… ，里面支持创建啦。 </p>
+<p>然后，开始愉快地使用 FTP 吧。</p>
+</div><div class="tags"><a href="/tags/工具/">工具</a></div><div class="post-nav"><a href="/2018-08-deploy-asp-net-core-on-windows/" class="next">Windows 服务器部署 Asp.net core</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@v1.1.7/dist/Valine.min.js?v=0.0.0"></script><script>var valine = new Valine({
   el:'#vcomment',
   notify:'false', 
   verify:'false', 
@@ -29,9 +22,9 @@
   avatar:'monsterid'
 })
 </script><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'jgrass';
-var disqus_identifier = '2018-02-TortoiseGit配置ssh服务/';
-var disqus_title = 'TortoiseGit配置ssh服务';
-var disqus_url = 'http://www.jgrass.cc/2018-02-TortoiseGit配置ssh服务/';
+var disqus_identifier = '2018-08-ftp-server-on-windows/';
+var disqus_title = '在 Windows 系统上安装 FTP 服务';
+var disqus_url = 'http://www.jgrass.cc/2018-08-ftp-server-on-windows/';
 $('.btn_click_load').click(function() {
   (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
