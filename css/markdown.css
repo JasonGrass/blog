@@ -15,6 +15,10 @@ theme color  : #0C7ED2
 strong color : #FF6103 
 */
 
+/*
+这里的修改无效，需要拷贝到 style.scss 中 
+*/
+
 pre, code {
     font-family: consolas, Avenir, PT-sans, microsoft-yahei;
   
@@ -25,7 +29,7 @@ pre, code {
     font-family: consolas, Avenir, PT-sans, microsoft-yahei !important;
    
     background-color: #F9F2F4;
-    color: #B22222;
+    color: #CFCFCF;
     /*font-weight: bold;*/
     /*padding: 0.1em; 0.1em;*/
     padding-left: 0.3em;
@@ -170,10 +174,12 @@ pre, code {
   }
   
   h3 {
+    color: #3D7FDF;
     font-size: 1.4em;
   }
   
   h4 {
+    color: rgb(71, 145, 219);
     font-size: 1.2em;
   }
   

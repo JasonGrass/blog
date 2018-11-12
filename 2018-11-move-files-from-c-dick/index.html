@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>安全转移C盘中软件的缓存文件 | 晒太阳的猫</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">安全转移C盘中软件的缓存文件</h1><a id="logo" href="/.">晒太阳的猫</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/rss/"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">安全转移C盘中软件的缓存文件</h1><div class="post-meta">Nov 7, 2018<span> | </span><span class="category"><a href="/categories/小零识/">小零识</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2018-11-move-files-from-c-dick/" href="/2018-11-move-files-from-c-dick/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>C盘飘红啦~~~</p>
+<a id="more"></a>
+<p>安装软件时，默认会安装到C盘，并不会特意去改（尤其C盘是固态硬盘时）。或者，根本就没有给你修改的机会。<br>可是啊，有些软件的缓存数据目录会比较大，实在太占C盘空间。想移出去，但又不想重装。   </p>
+<p>下文将介绍一种方法，将C盘中巨大的缓存目录（比如 Nuget 的缓存目录）安全无痛地移动到其它磁盘上。</p>
+<h3 id="Step-1-关闭软件"><a href="#Step-1-关闭软件" class="headerlink" title="Step 1 关闭软件"></a>Step 1 关闭软件</h3><p>关闭正在使用此目录的软件。</p>
+<h3 id="Step-2-移动文件夹"><a href="#Step-2-移动文件夹" class="headerlink" title="Step 2 移动文件夹"></a>Step 2 移动文件夹</h3><p>将缓存目录 <code>Xxx</code> 移到到其它磁盘，如 <code>D:\SoftwareCacheData\Xxx</code> 。<br>移动之前可以检查是否还有占用，如果有，先解除占用。</p>
+<ul>
+<li><a href="https://walterlv.com/post/find-out-which-process-is-using-a-file.html" target="_blank" rel="noopener">文件被占用？系统自带的“资源监视器(resmon)”也能帮你找到占用它的真凶 - walterlv</a>    </li>
+<li><a href="https://lockhunter.com/" target="_blank" rel="noopener">LockHunter is a free 64/32 bit tool to delete files blocked by any processes</a></li>
+</ul>
+<h3 id="Step3-设置目录链接"><a href="#Step3-设置目录链接" class="headerlink" title="Step3 设置目录链接"></a>Step3 设置目录链接</h3><p>假设源目录是 <code>C:\Users\Xxx\AppData\Roaming\Adobe</code> ，<br>目标目录是 <code>D:\SoftwareCacheData\Adobe</code>。  </p>
+<p>完成第二步之后，<code>D:\SoftwareCacheData\Adobe</code>下就是之前 C 盘源目录下的所有文件，此时 <code>C:\Users\Xxx\AppData\Roaming\Adobe</code> 已经不存在。<br>使用管理员权限设置目录链接即可完成最后一步：<br><code>mklink /j C:\Users\Xxx\AppData\Roaming\Adobe D:\SoftwareCacheData\Adobe</code></p>
+<p>大功告成。</p>
+<p>此时，所有 Adobe 目录下的文件，都会真实保存在 D 盘，但 C 盘中保留其目录链接，使用上没有任何影响。</p>
+<hr>
+<p>附：<br>磁盘空间分析工具：<br><a href="http://www.uderzo.it/main_products/space_sniffer/index.html" target="_blank" rel="noopener">SpaceSniffer, find lost disk space the easy way.</a>  </p>
+<p>参考资料：<br>FreeMove 这个软件似乎有BUG，移动完成之后没有成功设置目录链接。  </p>
+<ul>
+<li><a href="http://www.hangge.com/blog/cache/detail_1879.html" target="_blank" rel="noopener">Windows下文件夹映射的实现（将文件夹从一个盘映射到另一个盘）</a></li>
+<li><a href="http://www.hangge.com/blog/cache/detail_1944.html" target="_blank" rel="noopener">FreeMove - 快速移动已安装软件的文件夹（把C盘软件移到其它盘下）</a></li>
+<li><a href="https://walterlv.com/post/problems-of-mklink.html" target="_blank" rel="noopener">解决 mklink 使用中的各种坑（硬链接，软链接/符号链接，目录链接） - walterlv</a></li>
+</ul>
+</div><div class="tags"><a href="/tags/工具/">工具</a></div><div class="post-nav"><a href="/2018-11-gitxxx-does-not-provide-shell-access/" class="pre">GITEE.COM does not provide shell access. 是怎么回事。</a><a href="/2018-08-logstash-es-kibana-start/" class="next">ELK入门介绍</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@v1.1.7/dist/Valine.min.js?v=0.0.0"></script><script>var valine = new Valine({
+  el:'#vcomment',
+  notify:'false', 
+  verify:'false', 
+  app_id:'FmPa42dJkaFWcid27wtxVing-gzGzoHsz',
+  app_key:'pD9tskI8P6Dnp2whU2VYw4E0',
+  placeholder:'随意留言',
+  path: window.location.pathname,
+  avatar:'monsterid'
+})
+</script><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'jgrass';
+var disqus_identifier = '2018-11-move-files-from-c-dick/';
+var disqus_title = '安全转移C盘中软件的缓存文件';
+var disqus_url = 'http://www.jgrass.cc/2018-11-move-files-from-c-dick/';
+$('.btn_click_load').click(function() {
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  $('.btn_click_load').css('display','none');
+});
+$.ajax({
+  url: 'https://disqus.com/next/config.json',
+  timeout: 3000,
+  type: 'GET',
+  success: (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    $('.btn_click_load').css('display','none');
+  })(),
+  error: function() {
+    $('.btn_click_load').css('display','block');
+  }
+});</script><script id="dsq-count-scr" src="//jgrass.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/小零识/">小零识</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据/">数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂文/">杂文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程/">编程</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/工具/" style="font-size: 15px;">工具</a> <a href="/tags/Visual-Studio/" style="font-size: 15px;">Visual Studio</a> <a href="/tags/C/" style="font-size: 15px;">C#</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/WPF/" style="font-size: 15px;">WPF</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/Nuget/" style="font-size: 15px;">Nuget</a> <a href="/tags/net/" style="font-size: 15px;">.net</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018-11-gitxxx-does-not-provide-shell-access/">GITEE.COM does not provide shell access. 是怎么回事。</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-move-files-from-c-dick/">安全转移C盘中软件的缓存文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-logstash-es-kibana-start/">ELK入门介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-coding-standard-for-net/">读书笔记 - 改善 C# 程序的157个建议（部分）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-vs-code-setting-sync/">同步 Visual Studio Code 的设置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-php-on-windows/">在 Windows 系统上安装 PHP 服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-ftp-server-on-windows/">在 Windows 系统上安装 FTP 服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-deploy-asp-net-core-on-windows/">Windows 服务器部署 Asp.net core</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-csharp-enumerator/">迭代器模式 与 C# IEnumerator/IEnumerable</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-vimium-shortcut/">Vimium 快捷键笔记</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//jgrass.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://lindexi.gitee.io/" title="lindexi" target="_blank">lindexi</a><ul></ul><a href="https://walterlv.gitee.io/" title="walterlv" target="_blank">walterlv</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">晒太阳的猫.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

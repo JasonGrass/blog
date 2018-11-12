@@ -1,16 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Vim编辑器简明生存指南 | 晒太阳的猫</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Vim编辑器简明生存指南</h1><a id="logo" href="/.">晒太阳的猫</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/rss/"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Vim编辑器简明生存指南</h1><div class="post-meta">Aug 27, 2017<span> | </span><span class="category"><a href="/categories/小零识/">小零识</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2017-08-vim-Survival/" href="/2017-08-vim-Survival/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>在使用git命令行时，偶尔会遇到下面这个样子的一个界面，比如commit的时候忘记用 -m 写备注，git就会跳到这里让你写备注。  </p>
-<p><img src="http://ww1.sinaimg.cn/large/599d0f25gy1fix47nbzlwj20sc0fmgm9.jpg" alt="">  </p>
-<p>这个界面就是vim文本编辑器，下面这张图是vim中的一些基本操作，最常用操作用红框标出。  </p>
-<ul>
-<li>vim默认是在<strong>命令模式</strong> 。按<code>i</code> 进入<strong>插入模式</strong>，按<code>Shift+:</code> 进入<strong>末行命令模式</strong>。  </li>
-<li>从<strong>插入模式</strong>退出到<strong>命令模式</strong> ：按<code>ESC</code>。  </li>
-<li>从<strong>末行命令模式</strong> 返回到<strong>命令模式</strong> ，按<code>ESC</code> （只是返回，什么也没做）。  </li>
-<li>从<strong>末行命令模式</strong> 退出，按<code>x</code> （保存并退出）。  </li>
-</ul>
-<p><img src="http://ww1.sinaimg.cn/large/599d0f25gy1fix47wdobjj21no13z1cv.jpg" alt="">  </p>
-<p>想在Git Bash里面体验vim？直接打开Git Bash，输入 <code>vim</code>  ，就可以打开啦~  </p>
-<p>REF:<a href="http://www.runoob.com/linux/linux-vim.html" target="_blank" rel="noopener">http://www.runoob.com/linux/linux-vim.html</a>  </p>
-</div><div class="tags"></div><div class="post-nav"><a href="/2017-09-hexo-github-blog/" class="pre">用Hexo + Github 搭建博客</a><a href="/2017-08-Open-Command-Window-Here/" class="next">快速在文件夹打开命令行工具</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@v1.1.7/dist/Valine.min.js?v=0.0.0"></script><script>var valine = new Valine({
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>GITEE.COM does not provide shell access. 是怎么回事。 | 晒太阳的猫</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">GITEE.COM does not provide shell access. 是怎么回事。</h1><a id="logo" href="/.">晒太阳的猫</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/rss/"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">GITEE.COM does not provide shell access. 是怎么回事。</h1><div class="post-meta">Nov 12, 2018<span> | </span><span class="category"><a href="/categories/编程/">编程</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2018-11-gitxxx-does-not-provide-shell-access/" href="/2018-11-gitxxx-does-not-provide-shell-access/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>问题很简单，别想多了。</p>
+<a id="more"></a>
+<p>使用 gitee.com 时，冒出<br><code>You&#39;ve successfully authenticated, but GITEE.COM does not provide shell access.</code></p>
+<p>还以为 SSH 除了什么问题，其实，啥都没有。</p>
+<p><img src="http://ww1.sinaimg.cn/large/599d0f25gy1fx5n4kxi7zj20o60a474z.jpg" alt="">  </p>
+<p>开源中国原来有个域名：<code>git@git.oschina.net</code>，后来用了 <code>git@gitee.com</code> ，所以，把仓库的 git 地址更新一下就好了。  </p>
+<p>就这样。</p>
+<hr>
+<p>END</p>
+</div><div class="tags"><a href="/tags/git/">git</a></div><div class="post-nav"><a href="/2018-11-move-files-from-c-dick/" class="next">安全转移C盘中软件的缓存文件</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@v1.1.7/dist/Valine.min.js?v=0.0.0"></script><script>var valine = new Valine({
   el:'#vcomment',
   notify:'false', 
   verify:'false', 
@@ -21,9 +18,9 @@
   avatar:'monsterid'
 })
 </script><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'jgrass';
-var disqus_identifier = '2017-08-vim-Survival/';
-var disqus_title = 'Vim编辑器简明生存指南';
-var disqus_url = 'http://www.jgrass.cc/2017-08-vim-Survival/';
+var disqus_identifier = '2018-11-gitxxx-does-not-provide-shell-access/';
+var disqus_title = 'GITEE.COM does not provide shell access. 是怎么回事。';
+var disqus_url = 'http://www.jgrass.cc/2018-11-gitxxx-does-not-provide-shell-access/';
 $('.btn_click_load').click(function() {
   (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
