@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Mutex 的正确打开方式 | 晒太阳的猫</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Mutex 的正确打开方式</h1><a id="logo" href="/.">晒太阳的猫</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/rss/"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Mutex 的正确打开方式</h1><div class="post-meta">Jan 4, 2019<span> | </span><span class="category"><a href="/categories/编程/">编程</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2019-01-mutex/" href="/2019-01-mutex/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>在使用 Mutex 在给线程/进程间加锁时，需要注意的问题。</p>
+<a id="more"></a>
+<h2 id="1-AbandonedMutexException"><a href="#1-AbandonedMutexException" class="headerlink" title="1 AbandonedMutexException"></a>1 AbandonedMutexException</h2><p>在使用 <code>mutex.WaitOne</code> 时，可能抛出异常 AbandonedMutexException 。</p>
+<ul>
+<li><p>发生了什么？<br>有一个线程获得了锁，但没有释放锁，则会抛异常，此时数据的完整性可能被破坏。<br>具体解释见：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.threading.abandonedmutexexception?f1url=https%3A%2F%2Fmsdn.microsoft.com%2Fquery%2Fdev15.query%3FappId%3DDev15IDEF1%26l%3DZH-CN%26k%3Dk(System.Threading.AbandonedMutexException" target="_blank" rel="noopener">AbandonedMutexException Class (System.Threading) | Microsoft Docs</a>;k(TargetFrameworkMoniker-.NETFramework,Version%3Dv4.5);k(DevLang-csharp)%26rd%3Dtrue&amp;view=netframework-4.7.2)</p>
+</li>
+<li><p>如何处理？<br>如果不关心这个异常，可以直接 catch ，继续进行接来下的操作即可。无法再次调用 <code>WaitOne</code>。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">try</span></div><div class="line">    &#123;</div><div class="line">        mutex.WaitOne();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span>(AbandonedMutexException)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">// 即使捕获到这个异常，此时也已经获得了锁</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// do something</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">finally</span></div><div class="line">&#123;</div><div class="line">    mutex.ReleaseMutex();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>其它内容<br>考虑如下场景，运行 run.exe 程序，里面获取了 mutex 锁，没有释放直接退出，再次打开 run.exe ，是不会有 AbandonedMutexException 异常的。<br>但如果同时运行两个（多个） run.exe 程序，第一个获取锁之后不释放直接退出，则第二个 run.exe 会捕捉到 AbandonedMutexException 异常。<br>原因（猜测）：<br>在只有一个 run.exe 进程时，关闭之后，mutex 对应的内核对象随之是否，第二次运行，新建一个全新的 mutex 内核对象；<br>而当有两个（多个）run.exe 进程时，mutex 对象始终只有一个。  </p>
+</li>
+</ul>
+<h2 id="System-ApplicationException"><a href="#System-ApplicationException" class="headerlink" title="System.ApplicationException"></a>System.ApplicationException</h2><p>当 WaitOne 对应的 ReleaseMutex 不在同一线程时，会抛出异常：System.ApplicationException:“从不同步的代码块中调用了对象同步方法。”  </p>
+<ul>
+<li><p>当出现 ApplicationException 异常时，锁被释放了吗？<br>没有。只有当调用 WaitOne 的线程被回收之后，才会释放锁，并且下一个 WaitOne 会捕获 AbandonedMutexException 异常。  </p>
+</li>
+<li><p>如何避免<br>在 WaitOne 和 ReleaseMutex 之间不要插入 async/await 方法，否则课件带来线程切换。<br>在 UI 线程调用 WaitOne 和 ReleaseMutex ，之间到时课件插入 async/await 方法，最后还是会回到 UI 线程，但是，这样 WaitOne 就是在 UI 线程等啊，卡 UI 啊。  </p>
+</li>
+</ul>
+<h2 id="关于-WaitOne-与-ReleaseMutex-的次数。"><a href="#关于-WaitOne-与-ReleaseMutex-的次数。" class="headerlink" title="关于 WaitOne 与 ReleaseMutex 的次数。"></a>关于 WaitOne 与 ReleaseMutex 的次数。</h2><ul>
+<li><p>WaitOne 多少次，就要 ReleaseMutex 多少次。  </p>
+</li>
+<li><p>WaitOne 1 次， ReleaseMutex 多次会怎么样?<br>如果下一个 WaitOne 还没有被调用， ReleaseMutex 多次与一次的效果是一样的，如果有多个 WaitOne 在等待，那 ReleaseMutex 可能会帮其它的 WaitOne 跟释放锁，具体会不会真的释放，得看时机和运气。  </p>
+</li>
+</ul>
+</div><div class="tags"><a href="/tags/C/">C#</a></div><div class="post-nav"><a href="/2018-11-wait-task-with-timeout/" class="next">实现可设置超时的Task</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@v1.1.7/dist/Valine.min.js?v=0.0.0"></script><script>var valine = new Valine({
+  el:'#vcomment',
+  notify:'false', 
+  verify:'false', 
+  app_id:'FmPa42dJkaFWcid27wtxVing-gzGzoHsz',
+  app_key:'pD9tskI8P6Dnp2whU2VYw4E0',
+  placeholder:'随意留言',
+  path: window.location.pathname,
+  avatar:'monsterid'
+})
+</script><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'jgrass';
+var disqus_identifier = '2019-01-mutex/';
+var disqus_title = 'Mutex 的正确打开方式';
+var disqus_url = 'http://www.jgrass.cc/2019-01-mutex/';
+$('.btn_click_load').click(function() {
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  $('.btn_click_load').css('display','none');
+});
+$.ajax({
+  url: 'https://disqus.com/next/config.json',
+  timeout: 3000,
+  type: 'GET',
+  success: (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    $('.btn_click_load').css('display','none');
+  })(),
+  error: function() {
+    $('.btn_click_load').css('display','block');
+  }
+});</script><script id="dsq-count-scr" src="//jgrass.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/小零识/">小零识</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据/">数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/杂文/">杂文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程/">编程</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/工具/" style="font-size: 15px;">工具</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/C/" style="font-size: 15px;">C#</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/WPF/" style="font-size: 15px;">WPF</a> <a href="/tags/Visual-Studio/" style="font-size: 15px;">Visual Studio</a> <a href="/tags/Nuget/" style="font-size: 15px;">Nuget</a> <a href="/tags/net/" style="font-size: 15px;">.net</a> <a href="/tags/Windows/" style="font-size: 15px;">Windows</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-01-mutex/">Mutex 的正确打开方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-wait-task-with-timeout/">实现可设置超时的Task</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-windows-message-loop/">Windows 消息循环</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-does-not-provide-shell-access/">GITEE.COM does not provide shell access. 是怎么回事。</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-move-files-from-c-dick/">安全转移C盘中软件的缓存文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-logstash-es-kibana-start/">ELK入门介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-coding-standard-for-net/">读书笔记 - 改善 C# 程序的157个建议（部分）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-vs-code-setting-sync/">同步 Visual Studio Code 的设置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-php-on-windows/">在 Windows 系统上安装 PHP 服务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-ftp-server-on-windows/">在 Windows 系统上安装 FTP 服务</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//jgrass.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://lindexi.gitee.io/" title="lindexi" target="_blank">lindexi</a><ul></ul><a href="https://walterlv.gitee.io/" title="walterlv" target="_blank">walterlv</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">晒太阳的猫.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
