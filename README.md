@@ -13,3 +13,7 @@
 * gitee pages  
 
 [https://jasongrass.gitee.io](https://jasongrass.gitee.io)
+
+## 原文仓库
+
+my-vue-press（private）
