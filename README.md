@@ -4,15 +4,9 @@
 
 ## 博客地址
 
-* github pages  
+[https://jgrass.cc/blog](https://jgrass.cc/blog)  
 
-[https://jgrass.cc](https://jgrass.cc)  
-
-[https://jasongrass.github.io](https://jasongrass.github.io)
-
-* gitee pages  
-
-[https://jasongrass.gitee.io](https://jasongrass.gitee.io)
+[https://jasongrass.github.io/blog](https://jasongrass.github.io/blog)
 
 ## 原文仓库
 
